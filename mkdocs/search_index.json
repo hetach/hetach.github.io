@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Hetach Documentation\n\n\n\n\nWhat's Hetach?\n\n\nIntegration\n\n\nQuick start\n\n\nFastCGI\n\n\nWeb servers\n\n\nChangelog\n\n\n\n\nAPI:\n \nAPI Documentation\n\n\nSource code:\n \nhttps://github.com/hetach/hetach", 
+            "text": "Hetach Documentation\n\n\n\n\nWhat's Hetach?\n\n\nIntegration\n\n\nQuick start\n\n\nFastCGI\n\n\nWeb servers\n\n\nChangelog\n\n\n\n\nAPI documentation:\n \nhttps://hetach.gihub.io/api/index.html\n\n\nSource code:\n \nhttps://github.com/hetach/hetach\n\n\nExamples:\n \nhttps://github.com/hetach/examples", 
             "title": "Home"
         }, 
         {
             "location": "/#hetach-documentation", 
-            "text": "What's Hetach?  Integration  Quick start  FastCGI  Web servers  Changelog   API:   API Documentation  Source code:   https://github.com/hetach/hetach", 
+            "text": "What's Hetach?  Integration  Quick start  FastCGI  Web servers  Changelog   API documentation:   https://hetach.gihub.io/api/index.html  Source code:   https://github.com/hetach/hetach  Examples:   https://github.com/hetach/examples", 
             "title": "Hetach Documentation"
         }, 
         {
