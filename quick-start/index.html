@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Quick start - Hetach</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../api/doxygen.css" rel="stylesheet">
+  <link href="../api/navtree.css" rel="stylesheet">
+  <link href="../api/tabs.css" rel="stylesheet">
+  <link href="../api/html/doxygen.css" rel="stylesheet">
+  <link href="../api/html/navtree.css" rel="stylesheet">
+  <link href="../api/html/tabs.css" rel="stylesheet">
+  <link href="../api/html/search/search.css" rel="stylesheet">
+  <link href="../api/search/search.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Quick start";
+    var mkdocs_page_input_path = "quick-start.md";
+    var mkdocs_page_url = "/quick-start/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Hetach</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../whats-hetach/">What's Hetach?</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../integration/">Integration</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Quick start</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#controller">Controller</a></li>
+    
+
+    <li class="toctree-l2"><a href="#application">Application</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../fast-cgi/">FastCGI</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../web-servers/">Web servers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../changelog/">Changelog</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Hetach</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Quick start</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="controller">Controller</h1>
+<p>First, create a controller class which will show <code>Hello World!</code> on GET request</p>
+<pre><code class="cpp">#include &lt;hetach/http-kernel/controller.h&gt;
+
+using namespace Hetach::HttpKernel;
+
+class IndexController: public Controller
+{
+    void doGet()
+    {
+        this-&gt;response()-&gt;setContent(&quot;Hello World!&quot;);
+    }
+};
+</code></pre>
+
+<h1 id="application">Application</h1>
+<p>Next, create Hetach application using built-in web server running on default host and port</p>
+<pre><code class="cpp">#include &lt;hetach/application.h&gt;
+#include &lt;hetach/server/webserver.h&gt;
+
+#include &quot;indexcontroller.h&quot;
+
+using namespace Hetach;
+using namespace Hetach::HttpKernel;
+
+int main()
+{
+    Application *app = new Application(new WebServer());
+
+    Controller *controller = new IndexController();
+
+    app-&gt;route(&quot;/&quot;, controller);
+
+    return app-&gt;exec();
+}
+</code></pre>
+
+<p>After successfull build, visit <code>http://localhost:5555/</code> page to see if it works. And that's it!</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../fast-cgi/" class="btn btn-neutral float-right" title="FastCGI">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../integration/" class="btn btn-neutral" title="Integration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../integration/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../fast-cgi/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+      <script src="../api/annotated_dup.js"></script>
+      <script src="../api/class_hetach_1_1_api_rest_1_1_api_rest.js"></script>
+      <script src="../api/class_hetach_1_1_api_rest_1_1_entity.js"></script>
+      <script src="../api/class_hetach_1_1_api_rest_1_1_entity_collection.js"></script>
+      <script src="../api/class_hetach_1_1_api_rest_1_1_exception.js"></script>
+      <script src="../api/class_hetach_1_1_api_rest_1_1_resource.js"></script>
+      <script src="../api/class_hetach_1_1_api_rest_1_1_rest_controller.js"></script>
+      <script src="../api/class_hetach_1_1_application.js"></script>
+      <script src="../api/class_hetach_1_1_http_1_1_header.js"></script>
+      <script src="../api/class_hetach_1_1_http_1_1_request.js"></script>
+      <script src="../api/class_hetach_1_1_http_1_1_response.js"></script>
+      <script src="../api/class_hetach_1_1_http_kernel_1_1_controller.js"></script>
+      <script src="../api/class_hetach_1_1_http_kernel_1_1_controller_resolver.js"></script>
+      <script src="../api/class_hetach_1_1_http_kernel_1_1_kernel.js"></script>
+      <script src="../api/class_hetach_1_1_router_1_1_compiled_route.js"></script>
+      <script src="../api/class_hetach_1_1_router_1_1_params.js"></script>
+      <script src="../api/class_hetach_1_1_router_1_1_resource.js"></script>
+      <script src="../api/class_hetach_1_1_router_1_1_route.js"></script>
+      <script src="../api/class_hetach_1_1_router_1_1_route_compiler.js"></script>
+      <script src="../api/class_hetach_1_1_router_1_1_route_part.js"></script>
+      <script src="../api/class_hetach_1_1_router_1_1_router.js"></script>
+      <script src="../api/class_hetach_1_1_server_1_1_f_c_g_i_server.js"></script>
+      <script src="../api/class_hetach_1_1_server_1_1_server.js"></script>
+      <script src="../api/class_hetach_1_1_server_1_1_web_server.js"></script>
+      <script src="../api/dir_0b0ea6ccd578a2b5bafb4057b2d056ea.js"></script>
+      <script src="../api/dir_0c29ce18e977378667a9257c38f1c852.js"></script>
+      <script src="../api/dir_4d2ca676416ee7951e84e40ea19c282a.js"></script>
+      <script src="../api/dir_65b99f87c1e84077960bd338e5f66964.js"></script>
+      <script src="../api/dir_6cc5b5d64a258f9932a2f534e5b2a91d.js"></script>
+      <script src="../api/dir_83c6019675c84098800e9bee8982f4cb.js"></script>
+      <script src="../api/dir_d44c64559bbebec7f509842c48db8b23.js"></script>
+      <script src="../api/dynsections.js"></script>
+      <script src="../api/files.js"></script>
+      <script src="../api/hierarchy.js"></script>
+      <script src="../api/jquery.js"></script>
+      <script src="../api/menu.js"></script>
+      <script src="../api/menudata.js"></script>
+      <script src="../api/namespace_hetach.js"></script>
+      <script src="../api/namespace_hetach_1_1_api_rest.js"></script>
+      <script src="../api/namespace_hetach_1_1_http.js"></script>
+      <script src="../api/namespace_hetach_1_1_http_kernel.js"></script>
+      <script src="../api/namespace_hetach_1_1_router.js"></script>
+      <script src="../api/namespace_hetach_1_1_server.js"></script>
+      <script src="../api/namespaces.js"></script>
+      <script src="../api/navtree.js"></script>
+      <script src="../api/navtreedata.js"></script>
+      <script src="../api/navtreeindex0.js"></script>
+      <script src="../api/navtreeindex1.js"></script>
+      <script src="../api/resize.js"></script>
+      <script src="../api/html/annotated_dup.js"></script>
+      <script src="../api/html/application_8cpp.js"></script>
+      <script src="../api/html/class_hetach_1_1_api_rest_1_1_api_rest.js"></script>
+      <script src="../api/html/class_hetach_1_1_api_rest_1_1_entity.js"></script>
+      <script src="../api/html/class_hetach_1_1_api_rest_1_1_entity_collection.js"></script>
+      <script src="../api/html/class_hetach_1_1_api_rest_1_1_exception.js"></script>
+      <script src="../api/html/class_hetach_1_1_api_rest_1_1_resource.js"></script>
+      <script src="../api/html/class_hetach_1_1_api_rest_1_1_rest_controller.js"></script>
+      <script src="../api/html/class_hetach_1_1_application.js"></script>
+      <script src="../api/html/class_hetach_1_1_http_1_1_header.js"></script>
+      <script src="../api/html/class_hetach_1_1_http_1_1_request.js"></script>
+      <script src="../api/html/class_hetach_1_1_http_1_1_response.js"></script>
+      <script src="../api/html/class_hetach_1_1_http_kernel_1_1_controller.js"></script>
+      <script src="../api/html/class_hetach_1_1_http_kernel_1_1_controller_resolver.js"></script>
+      <script src="../api/html/class_hetach_1_1_http_kernel_1_1_kernel.js"></script>
+      <script src="../api/html/class_hetach_1_1_router_1_1_compiled_route.js"></script>
+      <script src="../api/html/class_hetach_1_1_router_1_1_params.js"></script>
+      <script src="../api/html/class_hetach_1_1_router_1_1_resource.js"></script>
+      <script src="../api/html/class_hetach_1_1_router_1_1_route.js"></script>
+      <script src="../api/html/class_hetach_1_1_router_1_1_route_compiler.js"></script>
+      <script src="../api/html/class_hetach_1_1_router_1_1_route_part.js"></script>
+      <script src="../api/html/class_hetach_1_1_router_1_1_router.js"></script>
+      <script src="../api/html/class_hetach_1_1_server_1_1_f_c_g_i_server.js"></script>
+      <script src="../api/html/class_hetach_1_1_server_1_1_server.js"></script>
+      <script src="../api/html/class_hetach_1_1_server_1_1_web_server.js"></script>
+      <script src="../api/html/dir_075bb3ff235063c77951cd176d15a741.js"></script>
+      <script src="../api/html/dir_0b0ea6ccd578a2b5bafb4057b2d056ea.js"></script>
+      <script src="../api/html/dir_0c29ce18e977378667a9257c38f1c852.js"></script>
+      <script src="../api/html/dir_1f889752808778ced67c1546e4239588.js"></script>
+      <script src="../api/html/dir_2d29d7dff7c7baf1180920f6796c23ae.js"></script>
+      <script src="../api/html/dir_4d2ca676416ee7951e84e40ea19c282a.js"></script>
+      <script src="../api/html/dir_65b99f87c1e84077960bd338e5f66964.js"></script>
+      <script src="../api/html/dir_68267d1309a1af8e8297ef4c3efbcdba.js"></script>
+      <script src="../api/html/dir_6cc5b5d64a258f9932a2f534e5b2a91d.js"></script>
+      <script src="../api/html/dir_6e2506c27f053a0927320064961e1b97.js"></script>
+      <script src="../api/html/dir_787e7c4391f4953dcb0562a91aa355dc.js"></script>
+      <script src="../api/html/dir_83c6019675c84098800e9bee8982f4cb.js"></script>
+      <script src="../api/html/dir_90f65edf7fb7c9a5dd77bfe7fa2b85fa.js"></script>
+      <script src="../api/html/dir_94810a2da10076b7d4f57685c37a2268.js"></script>
+      <script src="../api/html/dir_9802b4c1251697bb7aa87f8aabca2719.js"></script>
+      <script src="../api/html/dir_c0632c2c4769486d54d1bae76e6a432e.js"></script>
+      <script src="../api/html/dir_d3b0e33010160e4fddc61638a43a8c7f.js"></script>
+      <script src="../api/html/dir_d44c64559bbebec7f509842c48db8b23.js"></script>
+      <script src="../api/html/dynsections.js"></script>
+      <script src="../api/html/files.js"></script>
+      <script src="../api/html/hierarchy.js"></script>
+      <script src="../api/html/jquery.js"></script>
+      <script src="../api/html/menu.js"></script>
+      <script src="../api/html/menudata.js"></script>
+      <script src="../api/html/namespace_hetach.js"></script>
+      <script src="../api/html/namespace_hetach_1_1_api_rest.js"></script>
+      <script src="../api/html/namespace_hetach_1_1_http.js"></script>
+      <script src="../api/html/namespace_hetach_1_1_http_kernel.js"></script>
+      <script src="../api/html/namespace_hetach_1_1_router.js"></script>
+      <script src="../api/html/namespace_hetach_1_1_server.js"></script>
+      <script src="../api/html/namespaces.js"></script>
+      <script src="../api/html/navtree.js"></script>
+      <script src="../api/html/navtreedata.js"></script>
+      <script src="../api/html/navtreeindex0.js"></script>
+      <script src="../api/html/navtreeindex1.js"></script>
+      <script src="../api/html/resize.js"></script>
+      <script src="../api/html/webserver_8cpp.js"></script>
+      <script src="../api/html/search/all_0.js"></script>
+      <script src="../api/html/search/all_1.js"></script>
+      <script src="../api/html/search/all_10.js"></script>
+      <script src="../api/html/search/all_11.js"></script>
+      <script src="../api/html/search/all_12.js"></script>
+      <script src="../api/html/search/all_13.js"></script>
+      <script src="../api/html/search/all_14.js"></script>
+      <script src="../api/html/search/all_15.js"></script>
+      <script src="../api/html/search/all_2.js"></script>
+      <script src="../api/html/search/all_3.js"></script>
+      <script src="../api/html/search/all_4.js"></script>
+      <script src="../api/html/search/all_5.js"></script>
+      <script src="../api/html/search/all_6.js"></script>
+      <script src="../api/html/search/all_7.js"></script>
+      <script src="../api/html/search/all_8.js"></script>
+      <script src="../api/html/search/all_9.js"></script>
+      <script src="../api/html/search/all_a.js"></script>
+      <script src="../api/html/search/all_b.js"></script>
+      <script src="../api/html/search/all_c.js"></script>
+      <script src="../api/html/search/all_d.js"></script>
+      <script src="../api/html/search/all_e.js"></script>
+      <script src="../api/html/search/all_f.js"></script>
+      <script src="../api/html/search/classes_0.js"></script>
+      <script src="../api/html/search/classes_1.js"></script>
+      <script src="../api/html/search/classes_2.js"></script>
+      <script src="../api/html/search/classes_3.js"></script>
+      <script src="../api/html/search/classes_4.js"></script>
+      <script src="../api/html/search/classes_5.js"></script>
+      <script src="../api/html/search/classes_6.js"></script>
+      <script src="../api/html/search/classes_7.js"></script>
+      <script src="../api/html/search/classes_8.js"></script>
+      <script src="../api/html/search/classes_9.js"></script>
+      <script src="../api/html/search/classes_a.js"></script>
+      <script src="../api/html/search/enums_0.js"></script>
+      <script src="../api/html/search/enumvalues_0.js"></script>
+      <script src="../api/html/search/files_0.js"></script>
+      <script src="../api/html/search/files_1.js"></script>
+      <script src="../api/html/search/files_2.js"></script>
+      <script src="../api/html/search/files_3.js"></script>
+      <script src="../api/html/search/files_4.js"></script>
+      <script src="../api/html/search/files_5.js"></script>
+      <script src="../api/html/search/files_6.js"></script>
+      <script src="../api/html/search/files_7.js"></script>
+      <script src="../api/html/search/files_8.js"></script>
+      <script src="../api/html/search/files_9.js"></script>
+      <script src="../api/html/search/files_a.js"></script>
+      <script src="../api/html/search/files_b.js"></script>
+      <script src="../api/html/search/functions_0.js"></script>
+      <script src="../api/html/search/functions_1.js"></script>
+      <script src="../api/html/search/functions_10.js"></script>
+      <script src="../api/html/search/functions_11.js"></script>
+      <script src="../api/html/search/functions_12.js"></script>
+      <script src="../api/html/search/functions_13.js"></script>
+      <script src="../api/html/search/functions_14.js"></script>
+      <script src="../api/html/search/functions_15.js"></script>
+      <script src="../api/html/search/functions_2.js"></script>
+      <script src="../api/html/search/functions_3.js"></script>
+      <script src="../api/html/search/functions_4.js"></script>
+      <script src="../api/html/search/functions_5.js"></script>
+      <script src="../api/html/search/functions_6.js"></script>
+      <script src="../api/html/search/functions_7.js"></script>
+      <script src="../api/html/search/functions_8.js"></script>
+      <script src="../api/html/search/functions_9.js"></script>
+      <script src="../api/html/search/functions_a.js"></script>
+      <script src="../api/html/search/functions_b.js"></script>
+      <script src="../api/html/search/functions_c.js"></script>
+      <script src="../api/html/search/functions_d.js"></script>
+      <script src="../api/html/search/functions_e.js"></script>
+      <script src="../api/html/search/functions_f.js"></script>
+      <script src="../api/html/search/namespaces_0.js"></script>
+      <script src="../api/html/search/namespaces_1.js"></script>
+      <script src="../api/html/search/namespaces_2.js"></script>
+      <script src="../api/html/search/pages_0.js"></script>
+      <script src="../api/html/search/pages_1.js"></script>
+      <script src="../api/html/search/pages_2.js"></script>
+      <script src="../api/html/search/search.js"></script>
+      <script src="../api/html/search/searchdata.js"></script>
+      <script src="../api/html/search/variables_0.js"></script>
+      <script src="../api/html/search/variables_1.js"></script>
+      <script src="../api/search/all_0.js"></script>
+      <script src="../api/search/all_1.js"></script>
+      <script src="../api/search/all_10.js"></script>
+      <script src="../api/search/all_11.js"></script>
+      <script src="../api/search/all_12.js"></script>
+      <script src="../api/search/all_13.js"></script>
+      <script src="../api/search/all_14.js"></script>
+      <script src="../api/search/all_15.js"></script>
+      <script src="../api/search/all_2.js"></script>
+      <script src="../api/search/all_3.js"></script>
+      <script src="../api/search/all_4.js"></script>
+      <script src="../api/search/all_5.js"></script>
+      <script src="../api/search/all_6.js"></script>
+      <script src="../api/search/all_7.js"></script>
+      <script src="../api/search/all_8.js"></script>
+      <script src="../api/search/all_9.js"></script>
+      <script src="../api/search/all_a.js"></script>
+      <script src="../api/search/all_b.js"></script>
+      <script src="../api/search/all_c.js"></script>
+      <script src="../api/search/all_d.js"></script>
+      <script src="../api/search/all_e.js"></script>
+      <script src="../api/search/all_f.js"></script>
+      <script src="../api/search/classes_0.js"></script>
+      <script src="../api/search/classes_1.js"></script>
+      <script src="../api/search/classes_2.js"></script>
+      <script src="../api/search/classes_3.js"></script>
+      <script src="../api/search/classes_4.js"></script>
+      <script src="../api/search/classes_5.js"></script>
+      <script src="../api/search/classes_6.js"></script>
+      <script src="../api/search/classes_7.js"></script>
+      <script src="../api/search/classes_8.js"></script>
+      <script src="../api/search/classes_9.js"></script>
+      <script src="../api/search/classes_a.js"></script>
+      <script src="../api/search/enums_0.js"></script>
+      <script src="../api/search/enumvalues_0.js"></script>
+      <script src="../api/search/files_0.js"></script>
+      <script src="../api/search/files_1.js"></script>
+      <script src="../api/search/files_2.js"></script>
+      <script src="../api/search/files_3.js"></script>
+      <script src="../api/search/files_4.js"></script>
+      <script src="../api/search/files_5.js"></script>
+      <script src="../api/search/files_6.js"></script>
+      <script src="../api/search/files_7.js"></script>
+      <script src="../api/search/files_8.js"></script>
+      <script src="../api/search/files_9.js"></script>
+      <script src="../api/search/files_a.js"></script>
+      <script src="../api/search/files_b.js"></script>
+      <script src="../api/search/functions_0.js"></script>
+      <script src="../api/search/functions_1.js"></script>
+      <script src="../api/search/functions_10.js"></script>
+      <script src="../api/search/functions_11.js"></script>
+      <script src="../api/search/functions_12.js"></script>
+      <script src="../api/search/functions_13.js"></script>
+      <script src="../api/search/functions_14.js"></script>
+      <script src="../api/search/functions_15.js"></script>
+      <script src="../api/search/functions_2.js"></script>
+      <script src="../api/search/functions_3.js"></script>
+      <script src="../api/search/functions_4.js"></script>
+      <script src="../api/search/functions_5.js"></script>
+      <script src="../api/search/functions_6.js"></script>
+      <script src="../api/search/functions_7.js"></script>
+      <script src="../api/search/functions_8.js"></script>
+      <script src="../api/search/functions_9.js"></script>
+      <script src="../api/search/functions_a.js"></script>
+      <script src="../api/search/functions_b.js"></script>
+      <script src="../api/search/functions_c.js"></script>
+      <script src="../api/search/functions_d.js"></script>
+      <script src="../api/search/functions_e.js"></script>
+      <script src="../api/search/functions_f.js"></script>
+      <script src="../api/search/namespaces_0.js"></script>
+      <script src="../api/search/pages_0.js"></script>
+      <script src="../api/search/pages_1.js"></script>
+      <script src="../api/search/pages_2.js"></script>
+      <script src="../api/search/search.js"></script>
+      <script src="../api/search/searchdata.js"></script>
+      <script src="../api/search/variables_0.js"></script>
+
+</body>
+</html>

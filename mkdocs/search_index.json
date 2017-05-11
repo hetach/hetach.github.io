@@ -1,0 +1,119 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Hetach Documentation\n\n\n\n\nWhat's Hetach?\n\n\nIntegration\n\n\nQuick start\n\n\nFastCGI\n\n\nWeb servers\n\n\nChangelog\n\n\n\n\nAPI:\n \nAPI Documentation\n\n\nSource code:\n \nhttps://github.com/hetach/hetach", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#hetach-documentation", 
+            "text": "What's Hetach?  Integration  Quick start  FastCGI  Web servers  Changelog   API:   API Documentation  Source code:   https://github.com/hetach/hetach", 
+            "title": "Hetach Documentation"
+        }, 
+        {
+            "location": "/whats-hetach/", 
+            "text": "Description\n\n\nHetach is a micro-framework written in C++, which goal is to provide solution for creating web applications\n\n\nFeatures\n\n\n\n\nFastCGI\n\n\n\n\nHetach comes with FastCGI support, so can be integrated with any web server supporting FastCGI\n\n\n\n\nBuilt-in web server\n\n\n\n\nExternal web server is not required to run application\n\n\n\n\nAPI\n\n\n\n\nEasly create applications that provides API interface\n\n\n\n\nHTTP Router\n\n\n\n\nSimple, yet fast router with parameters support\n\n\nLicense\n\n\nGPLv2\n or any later GPL version", 
+            "title": "What's Hetach?"
+        }, 
+        {
+            "location": "/whats-hetach/#description", 
+            "text": "Hetach is a micro-framework written in C++, which goal is to provide solution for creating web applications", 
+            "title": "Description"
+        }, 
+        {
+            "location": "/whats-hetach/#features", 
+            "text": "FastCGI   Hetach comes with FastCGI support, so can be integrated with any web server supporting FastCGI   Built-in web server   External web server is not required to run application   API   Easly create applications that provides API interface   HTTP Router   Simple, yet fast router with parameters support", 
+            "title": "Features"
+        }, 
+        {
+            "location": "/whats-hetach/#license", 
+            "text": "GPLv2  or any later GPL version", 
+            "title": "License"
+        }, 
+        {
+            "location": "/integration/", 
+            "text": "Hetach uses \nCMake\n as a build system. There are two basic steps to integrate Hetach into Your project\n\n\nBuild library\n\n\nIf You use build system other than CMake (or Your system do not support external projects) build Hetach library. Execute following commands:\n\n\nmkdir build\ncd build\ncmake [-DHETACH_BUILD_TESTS=ON] ..\nmake\n\n\n\n\nwhen library is built, add include path and link library in Your build system\n\n\nCMake external project\n\n\nCreate directory \next/hetach\n and put there \nCMakeLists.txt\n file with content:\n\n\ncmake_minimum_required(VERSION 2.8)\nproject(hetach_builder CXX)\ninclude(ExternalProject)\n\nExternalProject_Add(hetach\n    GIT_REPOSITORY https://github.com/hetach/hetach.git\n    GIT_TAG master\n    PREFIX ${CMAKE_CURRENT_BINARY_DIR}\n    INSTALL_COMMAND \n\n)\n\nExternalProject_Get_Property(hetach source_dir)\nset(HETACH_INCLUDE_DIRS ${source_dir}/include PARENT_SCOPE)\n\nExternalProject_Get_Property(hetach binary_dir)\nset(HETACH_LIBS_DIR ${binary_dir} PARENT_SCOPE)\n\n\n\n\nAdd in Your \nCMakeLists.txt\n file below lines:\n\n\nadd_subdirectory(ext/hetach)\n\ninclude_directories(${HETACH_INCLUDE_DIRS})\n\nadd_dependencies(\nproject_name\n hetach)\n\ntarget_link_libraries(\nproject_name\n -L${HETACH_LIBS_DIR} hetach${CMAKE_SHARED_LIBRARY_SUFFIX})", 
+            "title": "Integration"
+        }, 
+        {
+            "location": "/integration/#build-library", 
+            "text": "If You use build system other than CMake (or Your system do not support external projects) build Hetach library. Execute following commands:  mkdir build\ncd build\ncmake [-DHETACH_BUILD_TESTS=ON] ..\nmake  when library is built, add include path and link library in Your build system", 
+            "title": "Build library"
+        }, 
+        {
+            "location": "/integration/#cmake-external-project", 
+            "text": "Create directory  ext/hetach  and put there  CMakeLists.txt  file with content:  cmake_minimum_required(VERSION 2.8)\nproject(hetach_builder CXX)\ninclude(ExternalProject)\n\nExternalProject_Add(hetach\n    GIT_REPOSITORY https://github.com/hetach/hetach.git\n    GIT_TAG master\n    PREFIX ${CMAKE_CURRENT_BINARY_DIR}\n    INSTALL_COMMAND  \n)\n\nExternalProject_Get_Property(hetach source_dir)\nset(HETACH_INCLUDE_DIRS ${source_dir}/include PARENT_SCOPE)\n\nExternalProject_Get_Property(hetach binary_dir)\nset(HETACH_LIBS_DIR ${binary_dir} PARENT_SCOPE)  Add in Your  CMakeLists.txt  file below lines:  add_subdirectory(ext/hetach)\n\ninclude_directories(${HETACH_INCLUDE_DIRS})\n\nadd_dependencies( project_name  hetach)\n\ntarget_link_libraries( project_name  -L${HETACH_LIBS_DIR} hetach${CMAKE_SHARED_LIBRARY_SUFFIX})", 
+            "title": "CMake external project"
+        }, 
+        {
+            "location": "/quick-start/", 
+            "text": "Controller\n\n\nFirst, create a controller class which will show \nHello World!\n on GET request\n\n\n#include \nhetach/http-kernel/controller.h\n\n\nusing namespace Hetach::HttpKernel;\n\nclass IndexController: public Controller\n{\n    void doGet()\n    {\n        this-\nresponse()-\nsetContent(\nHello World!\n);\n    }\n};\n\n\n\n\nApplication\n\n\nNext, create Hetach application using built-in web server running on default host and port\n\n\n#include \nhetach/application.h\n\n#include \nhetach/server/webserver.h\n\n\n#include \nindexcontroller.h\n\n\nusing namespace Hetach;\nusing namespace Hetach::HttpKernel;\n\nint main()\n{\n    Application *app = new Application(new WebServer());\n\n    Controller *controller = new IndexController();\n\n    app-\nroute(\n/\n, controller);\n\n    return app-\nexec();\n}\n\n\n\n\nAfter successfull build, visit \nhttp://localhost:5555/\n page to see if it works. And that's it!", 
+            "title": "Quick start"
+        }, 
+        {
+            "location": "/quick-start/#controller", 
+            "text": "First, create a controller class which will show  Hello World!  on GET request  #include  hetach/http-kernel/controller.h \n\nusing namespace Hetach::HttpKernel;\n\nclass IndexController: public Controller\n{\n    void doGet()\n    {\n        this- response()- setContent( Hello World! );\n    }\n};", 
+            "title": "Controller"
+        }, 
+        {
+            "location": "/quick-start/#application", 
+            "text": "Next, create Hetach application using built-in web server running on default host and port  #include  hetach/application.h \n#include  hetach/server/webserver.h \n\n#include  indexcontroller.h \n\nusing namespace Hetach;\nusing namespace Hetach::HttpKernel;\n\nint main()\n{\n    Application *app = new Application(new WebServer());\n\n    Controller *controller = new IndexController();\n\n    app- route( / , controller);\n\n    return app- exec();\n}  After successfull build, visit  http://localhost:5555/  page to see if it works. And that's it!", 
+            "title": "Application"
+        }, 
+        {
+            "location": "/fast-cgi/", 
+            "text": "While using FastCGI server, an external \nweb server\n with FastCGI support is required. Also FastCGI context should be created\n\n\nFastCGI context\n\n\nspawn-fcgi\n application can be used to create context\n\n\nApplication\n\n\nExample Hetach FastCGI application:\n\n\n#include \nhetach/application.h\n\n#include \nhetach/server/fcgiserver.h\n\n\n#include \nindexcontroller.h\n\n\nusing namespace Hetach;\nusing namespace Hetach::HttpKernel;\n\nint main()\n{\n    Application *app = new Application(new FCGIServer());\n\n    Controller *controller = new IndexController();\n\n    app-\nroute(\n/\n, controller);\n\n    return app-\nexec();\n}\n\n\n\n\nspawn-fcgi\n\n\nNow Hetach application must be run through spawn-fcgi with example command:\n\n\nspawn-fcgi -p 8000 -n app\n\n\n\n\nAll to do is to point web server to localhost:8000 and we're done!", 
+            "title": "FastCGI"
+        }, 
+        {
+            "location": "/fast-cgi/#fastcgi-context", 
+            "text": "spawn-fcgi  application can be used to create context", 
+            "title": "FastCGI context"
+        }, 
+        {
+            "location": "/fast-cgi/#application", 
+            "text": "Example Hetach FastCGI application:  #include  hetach/application.h \n#include  hetach/server/fcgiserver.h \n\n#include  indexcontroller.h \n\nusing namespace Hetach;\nusing namespace Hetach::HttpKernel;\n\nint main()\n{\n    Application *app = new Application(new FCGIServer());\n\n    Controller *controller = new IndexController();\n\n    app- route( / , controller);\n\n    return app- exec();\n}", 
+            "title": "Application"
+        }, 
+        {
+            "location": "/fast-cgi/#spawn-fcgi", 
+            "text": "Now Hetach application must be run through spawn-fcgi with example command:  spawn-fcgi -p 8000 -n app  All to do is to point web server to localhost:8000 and we're done!", 
+            "title": "spawn-fcgi"
+        }, 
+        {
+            "location": "/web-servers/", 
+            "text": "Nginx\n\n\nAssuming that FastCGI application is listening on port 8000 and localhost, minimal configuration looks like:\n\n\nhttp {\n    server {\n        listen 80;\n        server_name localhost;\n\n        location / {\n            fastcgi_pass   127.0.0.1:8000;\n\n            fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;\n            fastcgi_param  SERVER_SOFTWARE    nginx;\n            fastcgi_param  QUERY_STRING       $query_string;\n            fastcgi_param  REQUEST_METHOD     $request_method;\n            fastcgi_param  CONTENT_TYPE       $content_type;\n            fastcgi_param  CONTENT_LENGTH     $content_length;\n            fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;\n            fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;\n            fastcgi_param  REQUEST_URI        $request_uri;\n            fastcgi_param  DOCUMENT_URI       $document_uri;\n            fastcgi_param  DOCUMENT_ROOT      $document_root;\n            fastcgi_param  SERVER_PROTOCOL    $server_protocol;\n            fastcgi_param  REMOTE_ADDR        $remote_addr;\n            fastcgi_param  REMOTE_PORT        $remote_port;\n            fastcgi_param  SERVER_ADDR        $server_addr;\n            fastcgi_param  SERVER_PORT        $server_port;\n            fastcgi_param  SERVER_NAME        $server_name;\n        }\n    }\n}", 
+            "title": "Web servers"
+        }, 
+        {
+            "location": "/web-servers/#nginx", 
+            "text": "Assuming that FastCGI application is listening on port 8000 and localhost, minimal configuration looks like:  http {\n    server {\n        listen 80;\n        server_name localhost;\n\n        location / {\n            fastcgi_pass   127.0.0.1:8000;\n\n            fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;\n            fastcgi_param  SERVER_SOFTWARE    nginx;\n            fastcgi_param  QUERY_STRING       $query_string;\n            fastcgi_param  REQUEST_METHOD     $request_method;\n            fastcgi_param  CONTENT_TYPE       $content_type;\n            fastcgi_param  CONTENT_LENGTH     $content_length;\n            fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;\n            fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;\n            fastcgi_param  REQUEST_URI        $request_uri;\n            fastcgi_param  DOCUMENT_URI       $document_uri;\n            fastcgi_param  DOCUMENT_ROOT      $document_root;\n            fastcgi_param  SERVER_PROTOCOL    $server_protocol;\n            fastcgi_param  REMOTE_ADDR        $remote_addr;\n            fastcgi_param  REMOTE_PORT        $remote_port;\n            fastcgi_param  SERVER_ADDR        $server_addr;\n            fastcgi_param  SERVER_PORT        $server_port;\n            fastcgi_param  SERVER_NAME        $server_name;\n        }\n    }\n}", 
+            "title": "Nginx"
+        }, 
+        {
+            "location": "/changelog/", 
+            "text": "0.1.3\n \n(04.03.2017)\n\n\n\n\nApi error handling\n\n\n\n\n0.1.2\n \n(25.02.2017)\n\n\n\n\nFixed ApiRest request content pass\n\n\n\n\n0.1.1\n \n(18.02.2017)\n\n\n\n\nFixed includes\n\n\n\n\n0.1.0\n \n(22.01.2017)\n - Initial release\n\n\n\n\n[Feature][\n#1\n] FastCGI interface\n\n\n[Feature][\n#2\n] Built-in http server\n\n\n[Feature][\n#5\n][\n#6\n][\n#4\n][\n#14\n][\n#7\n][\n#10\n] Controller API\n\n\n[Feature][\n#8\n][\n#9\n] REST API creation helpers", 
+            "title": "Changelog"
+        }, 
+        {
+            "location": "/changelog/#013-04032017", 
+            "text": "Api error handling", 
+            "title": "0.1.3 (04.03.2017)"
+        }, 
+        {
+            "location": "/changelog/#012-25022017", 
+            "text": "Fixed ApiRest request content pass", 
+            "title": "0.1.2 (25.02.2017)"
+        }, 
+        {
+            "location": "/changelog/#011-18022017", 
+            "text": "Fixed includes", 
+            "title": "0.1.1 (18.02.2017)"
+        }, 
+        {
+            "location": "/changelog/#010-22012017-initial-release", 
+            "text": "[Feature][ #1 ] FastCGI interface  [Feature][ #2 ] Built-in http server  [Feature][ #5 ][ #6 ][ #4 ][ #14 ][ #7 ][ #10 ] Controller API  [Feature][ #8 ][ #9 ] REST API creation helpers", 
+            "title": "0.1.0 (22.01.2017) - Initial release"
+        }
+    ]
+}
