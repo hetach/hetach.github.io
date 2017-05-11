@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['usage',['Usage',['../md_docs__usage.html',1,'']]]
+  ['fast_2dcgi',['fast-cgi',['../md_docs_fast-cgi.html',1,'']]]
 ];

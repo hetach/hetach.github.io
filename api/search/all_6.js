@@ -11,6 +11,7 @@ var searchData=
   ['http',['Http',['../namespace_hetach_1_1_http.html',1,'Hetach']]],
   ['httpkernel',['HttpKernel',['../namespace_hetach_1_1_http_kernel.html',1,'Hetach']]],
   ['httpmethod',['HttpMethod',['../class_hetach_1_1_http_1_1_request.html#a0140e5f8dfc2d907b6d377899b1661b2',1,'Hetach::Http::Request']]],
+  ['hetach_20documentation',['Hetach Documentation',['../md_docs_index.html',1,'']]],
   ['router',['Router',['../namespace_hetach_1_1_router.html',1,'Hetach']]],
   ['server',['Server',['../namespace_hetach_1_1_server.html',1,'Hetach']]]
 ];

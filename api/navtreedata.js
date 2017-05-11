@@ -1,9 +1,13 @@
 var NAVTREE =
 [
   [ "Hetach", "index.html", [
-    [ "CHANGELOG", "md__c_h_a_n_g_e_l_o_g.html", null ],
-    [ "Usage", "md_docs__usage.html", null ],
-    [ "Configuration of Web Server", "md_docs__web_servers.html", null ],
+    [ "**0.1.3** _(04.03.2017)_", "md_docs_changelog.html", null ],
+    [ "fast-cgi", "md_docs_fast-cgi.html", null ],
+    [ "Hetach Documentation", "md_docs_index.html", null ],
+    [ "integration", "md_docs_integration.html", null ],
+    [ "Controller", "md_docs_quick-start.html", null ],
+    [ "Nginx", "md_docs_web-servers.html", null ],
+    [ "Description", "md_docs_whats-hetach.html", null ],
     [ "README", "md__r_e_a_d_m_e.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ]
@@ -29,7 +33,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"namespace_hetach_1_1_http_kernel.html"
+"namespace_hetach_1_1_api_rest.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
