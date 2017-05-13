@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['readme',['README',['../md__r_e_a_d_m_e.html',1,'']]],
   ['rawpath',['rawPath',['../class_hetach_1_1_router_1_1_compiled_route.html#a958b0f3bc25af40049a28fb76c88d839',1,'Hetach::Router::CompiledRoute']]],
-  ['readme_2emd',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
   ['remove',['remove',['../class_hetach_1_1_api_rest_1_1_resource.html#a70ed9dd29c0b55be4c05dab6c20eaa23',1,'Hetach::ApiRest::Resource::remove(std::string id)'],['../class_hetach_1_1_api_rest_1_1_resource.html#a8d78cf5ce05794b94dad62bf380d9c32',1,'Hetach::ApiRest::Resource::remove()']]],
   ['replace',['replace',['../class_hetach_1_1_api_rest_1_1_resource.html#a1195375166dcfe800f2fde28c6c7e00d',1,'Hetach::ApiRest::Resource::replace(std::string id, std::string content)'],['../class_hetach_1_1_api_rest_1_1_resource.html#abe36692679fcc428dee131b05e0b070c',1,'Hetach::ApiRest::Resource::replace(std::string content)']]],
   ['request',['Request',['../class_hetach_1_1_http_1_1_request.html',1,'Hetach::Http::Request'],['../class_hetach_1_1_http_kernel_1_1_controller.html#ac5e10ec332bd44f156bcb6d58fac5eea',1,'Hetach::HttpKernel::Controller::request()'],['../class_hetach_1_1_http_1_1_request.html#abdb7ddc1c1018cc2a9cadca529a4d3d2',1,'Hetach::Http::Request::Request()']]],

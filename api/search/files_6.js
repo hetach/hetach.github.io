@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['kernel_2eh',['kernel.h',['../kernel_8h.html',1,'']]]
+  ['methodnotimplementedexception_2eh',['methodnotimplementedexception.h',['../methodnotimplementedexception_8h.html',1,'']]],
+  ['methodunknownexception_2eh',['methodunknownexception.h',['../methodunknownexception_8h.html',1,'']]]
 ];
